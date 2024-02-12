@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Styled Google Map</title>
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+  <script>
+    function initMap() {
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: -34.397, lng: 150.644},
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        styles: [
+          {
+            featureType: 'building',
+            elementType: 'geometry',
+            stylers: [{ color: '#ff0000' }] // Change color of buildings (red)
+          },
+          // You can add more style rules for other map features here
+        ]
+      });
+    }
+  </script>
+  <style>
+    #map {
+      height: 400px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+</body>
+</html>
