@@ -1,23 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Styled Google Map</title>
+  <title>Google Maps Image Overlay</title>
   <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
   <script>
     function initMap() {
       var map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: -34.397, lng: 150.644},
         zoom: 15,
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        styles: [
-          {
-            featureType: 'building',
-            elementType: 'geometry',
-            stylers: [{ color: '#ff0000' }] // Change color of buildings (red)
-          },
-          // You can add more style rules for other map features here
-        ]
+        mapTypeId: google.maps.MapTypeId.SATELLITE // Display satellite imagery
       });
+
+      // Define the bounds for the image overlay
+      var bounds = {
+        north: -34.391,
+        south: -34.403,
+        east: 150.65,
+        west: 150.635
+      };
+
+      // Load the image overlay
+      var imageOverlay = new google.maps.GroundOverlay(
+        'map_image.jpg',
+        bounds
+      );
+
+      // Add the image overlay to the map
+      imageOverlay.setMap(map);
     }
   </script>
   <style>
