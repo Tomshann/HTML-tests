@@ -1,42 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Google Maps Image Overlay</title>
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
-  <script>
-    function initMap() {
-      var map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: -34.397, lng: 150.644},
-        zoom: 15,
-        mapTypeId: google.maps.MapTypeId.SATELLITE // Display satellite imagery
-      });
-
-      // Define the bounds for the image overlay
-      var bounds = {
-        north: -34.391,
-        south: -34.403,
-        east: 150.65,
-        west: 150.635
-      };
-
-      // Load the image overlay
-      var imageOverlay = new google.maps.GroundOverlay(
-        'map_image.jpg',
-        bounds
-      );
-
-      // Add the image overlay to the map
-      imageOverlay.setMap(map);
-    }
-  </script>
-  <style>
-    #map {
-      height: 400px;
-      width: 100%;
-    }
-  </style>
+    <title>OpenLayers Image Overlay</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol/6.9.0/ol.css" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/ol/6.9.0/ol.js"></script>
+    <style>
+        #map {
+            width: 100%;
+            height: 400px;
+        }
+    </style>
 </head>
 <body>
-  <div id="map"></div>
+
+<div id="map" class="map"></div>
+
+<script type="text/javascript">
+    var map = new ol.Map({
+        target: 'map',
+        layers: [
+            new ol.layer.Image({
+                source: new ol.source.ImageStatic({
+                    url: 'map_image.jpg', // Replace with your image URL
+                    projection: 'EPSG:3857',
+                    imageExtent: [-13000000, 3850000, -12500000, 4350000] // Adjust extent as needed
+                })
+            })
+        ],
+        view: new ol.View({
+            center: ol.proj.fromLonLat([-122.4194, 37.7749]), // Adjust coordinates as needed
+            zoom: 12 // Adjust zoom level as needed
+        })
+    });
+
+    // Add building overlay (example)
+    var buildingOverlay = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            features: [
+                new ol.Feature({
+                    geometry: new ol.geom.Point(ol.proj.fromLonLat([-122.4194, 37.7749])),
+                    name: 'Building 1'
+                }),
+                // Add more buildings as needed
+            ]
+        }),
+        style: new ol.style.Style({
+            image: new ol.style.Circle({
+                radius: 10,
+                fill: new ol.style.Fill({ color: 'rgba(0, 0, 255, 0.5)' }), // Blue color with transparency
+                stroke: new ol.style.Stroke({ color: 'blue', width: 2 })
+            })
+        })
+    });
+    map.addLayer(buildingOverlay);
+</script>
+
 </body>
 </html>
