@@ -19,12 +19,8 @@
     var map = new ol.Map({
         target: 'map',
         layers: [
-            new ol.layer.Image({
-                source: new ol.source.ImageStatic({
-                    url: 'map_image.jpg', // Replace with your image URL
-                    projection: 'EPSG:3857',
-                    imageExtent: [-13000000, 3850000, -12500000, 4350000] // Adjust extent as needed
-                })
+            new ol.layer.Tile({
+                source: new ol.source.OSM() // OpenStreetMap as base map
             })
         ],
         view: new ol.View({
